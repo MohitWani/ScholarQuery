@@ -1,0 +1,13 @@
+requests
+langchain
+llama-index
+streamlit
+pandas
+langchain_community
+fastapi
+uvicorn
+langserve
+python-dotenv
+google-generativeai
+langchain-google-genai
+sse_starlette
