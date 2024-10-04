@@ -11,3 +11,4 @@ python-dotenv
 google-generativeai
 langchain-google-genai
 sse_starlette
+langchain_groq

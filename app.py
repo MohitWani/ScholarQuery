@@ -1,9 +1,9 @@
-from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.indexes import VectorstoreIndexCreator
+from langchain_community.embeddings import GPT4AllEmbeddings
+from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain.vectorstores import FAISS, Chroma
-
-from fastapi import FastAPI
-
-app = FastAPI()
+from langchain_groq import ChatGroq
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
