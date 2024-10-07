@@ -1,5 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 #from langchain_groq import ChatGroq
+from langchain_core.load.load import loads
+from langchain_core.load.dump import dumps
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser, BaseOutputParser
@@ -47,9 +49,30 @@ def multi_query_retriever(llm, retriever, query):
         retriever=retriever, llm_chain=chain, parser_key="lines"
     )
 
-    logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
+    #logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
 
     return multi_query.invoke(query)
+
+# RAG Fusion step to reranked a retrieved documents.
+def reciprocal_rank_fusion(results: list[list], k=60):
+    fused_scores = {}
+
+    for docs in results:
+        for rank, doc in enumerate(docs):
+            doc_str = dumps(doc)
+            if doc_str not in fused_scores:
+                fused_scores[doc_str] = 0
+            previous_score = fused_scores[doc_str]
+            fused_scores[doc_str] += 1 / (rank + k)
+
+    # Sort the documents based on their fused scores in descending order to get the final reranked results
+    reranked_results = [
+        (loads(doc), score)
+        for doc, score in sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)
+    ]
+
+    # Return the reranked results as a list of tuples, each containing the document and its fused score
+    return reranked_results
     
 
 """BELOW CODE IS BELONG TO THE NAIVE RAG OR SIMPLE RAG"""
@@ -121,5 +144,5 @@ if __name__=="__main__":
     #result = Naive_retriever(llm, retrieval, query)
     result = multi_query_retriever(llm, retrieval, query)
 
-    print(result)
-    print(len(result))
+    rank = reciprocal_rank_fusion(result)
+    print(rank)
