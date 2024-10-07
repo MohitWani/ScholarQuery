@@ -1,5 +1,6 @@
 from langchain_groq.chat_models import ChatGroq
-from langchain.agents import AgentExecutor, create_react_agent, load_tools
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain import hub
 from dotenv import load_dotenv
 import os 
@@ -18,11 +19,10 @@ llm=ChatGroq(groq_api_key=Groq_api_key,
 prompt = hub.pull("hwchase17/react")
 
 agent = create_react_agent(llm=llm, prompt=prompt, tools=tools)
-
-agent_executor = AgentExecutor(llm=llm, tools=tools, verbose=True)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
 if __name__=='__main__':
-    query = ""
+    query = "what are the inputs to transformers in Attention is all you need paper?"
     result = agent_executor.invoke({"input":query})
 
     print(result)

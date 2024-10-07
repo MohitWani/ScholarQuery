@@ -1,10 +1,15 @@
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 #from langchain_groq import ChatGroq
+from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser, BaseOutputParser
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEndpoint
+
+import logging
+logging.basicConfig()
+
 from dotenv import load_dotenv
 import os
 
@@ -12,19 +17,45 @@ load_dotenv()
 
 huggingface_token = os.environ['HuggingFace_token']
 
-def get_relavant_doc(query,db):
+
+"""BELOW CODE IS BELONG TO THE ADVANCE RAG AND IT CONTAIN STEPS LIKE // QUERY TRANSLATION->ROUTING->SELF QUERY RETRIEVER->RAG FUSION"""
+# Output parser will split the LLM result into a list of queries
+class LineListOutputParser(BaseOutputParser[list[str]]):
+    """Output parser for a list of lines."""
+
+    def parse(self, text: str) -> list[str]:
+        lines = text.strip().split("\n")
+        return list(filter(None, lines))
+
+# Multi Query Retriever Function for Query Translation.
+def multi_query_retriever(llm, retriever, query):
+
+    QUERY_PROMPT = PromptTemplate(
+            input_variables=["question"],
+            template="""You are an AI language model assistant. Your task is to generate five 
+            different versions of the given user question to retrieve relevant documents from a vector 
+            database. By generating multiple perspectives on the user question, your goal is to help
+            the user overcome some of the limitations of the distance-based similarity search. 
+            Provide these alternative questions separated by newlines.
+            Original question: {question}""",
+        )
     
-    query_embedding = GPT4AllEmbeddings().embed_query(query)
+    output_parser = LineListOutputParser()
+    chain = QUERY_PROMPT | llm | output_parser
+
+    multi_query = MultiQueryRetriever(
+        retriever=retriever, llm_chain=chain, parser_key="lines"
+    )
+
+    logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
+
+    return multi_query.invoke(query)
     
-    similar_docs = db.similarity_search_by_vector(query_embedding)
 
-    return similar_docs
+"""BELOW CODE IS BELONG TO THE NAIVE RAG OR SIMPLE RAG"""
 
-# def format_docs(docs):
-#     return "\n\n".join(doc.page_content for doc in docs)
-
-
-def get_output(llm,retriever,query):
+# This is a part of Naive RAG which is a simple RAG.// which use Query->Retriever->llm->Output.
+def Naive_retriever(llm,retriever,query):
     template = """Answer the question of user by using the context:
 
                 {context}
@@ -38,6 +69,8 @@ def get_output(llm,retriever,query):
 
     prompt = ChatPromptTemplate.from_template(template)
 
+    
+
     chain = (
         {"context": retriever, "question": RunnablePassthrough()}
         | prompt
@@ -45,6 +78,18 @@ def get_output(llm,retriever,query):
         | StrOutputParser()
     )
     return chain.invoke(query)
+
+# Function to retrieve similar documents from the vector database // Using similarity search
+def get_relavant_doc(query,db):
+    
+    query_embedding = GPT4AllEmbeddings().embed_query(query)
+    
+    similar_docs = db.similarity_search_by_vector(query_embedding)
+
+    return similar_docs
+
+# def format_docs(docs):
+#     return "\n\n".join(doc.page_content for doc in docs)
 
 def model():
     model_kwargs={
@@ -73,6 +118,8 @@ if __name__=="__main__":
     
     # formatted_docs = format_docs(docs)
 
-    result = get_output(llm, retrieval, query)
+    #result = Naive_retriever(llm, retrieval, query)
+    result = multi_query_retriever(llm, retrieval, query)
 
     print(result)
+    print(len(result))

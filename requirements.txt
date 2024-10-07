@@ -4,7 +4,7 @@ llama-index
 streamlit
 pandas
 langchain_community
-fastapi
+fastapi == 0.115.0
 uvicorn
 langserve
 python-dotenv
@@ -15,3 +15,4 @@ langchain_groq
 gpt4all
 faiss-cpu
 langchain_huggingface
+arxiv
