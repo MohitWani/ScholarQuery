@@ -4,6 +4,8 @@ from langchain import hub
 from dotenv import load_dotenv
 import os 
 
+load_dotenv()
+
 Groq_api_key = os.environ['Groq_API_key']
 
 tools= load_tools(
