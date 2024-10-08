@@ -34,13 +34,10 @@ def multi_query_retriever(llm, retriever, query):
 
     QUERY_PROMPT = PromptTemplate(
             input_variables=["question"],
-            template="""You are an AI language model assistant. Your task is to generate five 
-            different versions of the given user question to retrieve relevant documents from a vector 
-            database. By generating multiple perspectives on the user question, your goal is to help
-            the user overcome some of the limitations of the distance-based similarity search. 
-            Provide these alternative questions separated by newlines.
-            Original question: {question}""",
-        )
+            template="""You are a helpful assistant that generates multiple search queries based on a single input query. \n
+                Generate multiple search queries related to: {question} \n
+                Output (4 queries):""",
+            )
     
     output_parser = LineListOutputParser()
     chain = QUERY_PROMPT | llm | output_parser
@@ -74,6 +71,23 @@ def reciprocal_rank_fusion(results: list[list], k=60):
     # Return the reranked results as a list of tuples, each containing the document and its fused score
     return reranked_results
     
+def generation_step(llm,reranked_results,query):
+    template = """Answer the following question based on this context:
+
+                {context}
+
+                Question: {question}
+                """
+
+    prompt = ChatPromptTemplate.from_template(template)
+
+    
+
+    final_rag_chain = ( prompt
+        | llm
+        | StrOutputParser()
+    )
+    return final_rag_chain.invoke({'context':reranked_results, "question": query})
 
 """BELOW CODE IS BELONG TO THE NAIVE RAG OR SIMPLE RAG"""
 
@@ -134,7 +148,7 @@ if __name__=="__main__":
     db = FAISS.load_local('D:/my_projects/ScholarQuery/faiss_index', embedding, allow_dangerous_deserialization=True)
     retrieval = db.as_retriever()
 
-    query = "Which Technology is use in this paper?"
+    query = "Give me summary of this paper?"
     llm = model()
 
     # docs = get_relavant_doc(query,db)
@@ -142,7 +156,9 @@ if __name__=="__main__":
     # formatted_docs = format_docs(docs)
 
     #result = Naive_retriever(llm, retrieval, query)
-    result = multi_query_retriever(llm, retrieval, query)
+    retrieved = multi_query_retriever(llm, retrieval, query)
 
-    rank = reciprocal_rank_fusion(result)
-    print(rank)
+    rank = reciprocal_rank_fusion(retrieved)
+    
+    result = generation_step(llm, rank, query)
+    print(result)
