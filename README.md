@@ -8,3 +8,5 @@ This project is designed to reduce time and get information quickly without wast
 
 
 ### Key Features.
+- Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
+- Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
