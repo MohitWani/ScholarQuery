@@ -10,3 +10,7 @@ This project is designed to reduce time and get information quickly without wast
 
 - Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
 - Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
+
+### Technology used.
+
+- **Language/Frameworks** : Python, Streamlit, FastAPI
