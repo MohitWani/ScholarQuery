@@ -13,4 +13,4 @@ This project is designed to reduce time and get information quickly without wast
 
 ### Technology used.
 
-- **Language/Frameworks** : Python, Streamlit, FastAPI
+- **Language/Frameworks** : Python, Langchain, Streamlit, FastAPI
