@@ -1,6 +1,6 @@
 # frontend.py (Streamlit frontend)
 import streamlit as st
-from agent import run_agent
+from utils.agent import run_agent
 import requests
 from langchain_groq.chat_models import ChatGroq
 from langchain.agents import AgentExecutor, create_react_agent
