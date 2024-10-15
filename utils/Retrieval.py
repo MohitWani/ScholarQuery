@@ -27,7 +27,7 @@ def splitter(document):
     return docs
 
 
-def create_vectorstore(docs, embedding, path_tosave):
+def create_vectorstore(docs, embedding=GPT4AllEmbeddings(), path_tosave='D:/my_projects/ScholarQuery'):
 
     vectorstore = FAISS.from_documents(docs, embedding)
 
