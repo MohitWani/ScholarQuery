@@ -1,32 +1,11 @@
 # frontend.py (Streamlit frontend)
 import streamlit as st
 from utils.agent import run_agent
-import requests
-from langchain_groq.chat_models import ChatGroq
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain.memory import ConversationBufferMemory
 import streamlit as st
 import requests
 
-
-
-from dotenv import load_dotenv
-import os 
-
-load_dotenv()
-
-Groq_api_key = os.environ['Groq_API_key']
-
-tools= load_tools(
-    ['arxiv'],
-)
-
-llm=ChatGroq(groq_api_key=Groq_api_key,
-         model_name="mixtral-8x7b-32768")
-
 # Streamlit app interface
-st.title("Ask Me About Research Paper.")
+
 
 # File Upload
 # st.header("Upload Document")
@@ -39,7 +18,9 @@ st.title("Ask Me About Research Paper.")
 #     st.success("Document uploaded! " + response.json().get("message"))
 
 
-agent_executor = run_agent(tools, llm)
+
+st.title("Ask Me About Research Paper.")
+agent_executor = run_agent()
 
 st.title("Ask Me About Research Paper.")
 

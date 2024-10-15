@@ -4,10 +4,21 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain import hub
 from langchain.memory import ConversationBufferMemory
 
+from dotenv import load_dotenv
+import os 
 
+load_dotenv()
 
+Groq_api_key = os.environ['Groq_API_key']
 
-def run_agent(tools, model):
+tools= load_tools(
+    ['arxiv'],
+)
+
+llm=ChatGroq(groq_api_key=Groq_api_key,
+         model_name="mixtral-8x7b-32768")
+
+def run_agent(tool=tools, model=llm):
     prompt = hub.pull("hwchase17/react")
 
     memory = ConversationBufferMemory(return_messages=True)

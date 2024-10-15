@@ -3,11 +3,14 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.vectorstores import FAISS
+import tempfile
 import os
 
 
 def load_document(file_path):
-    document = PyPDFLoader(file_path).load()
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+        tmp_file.write(file_path.read())
+    document = PyPDFLoader(tmp_file.name).load()
     print("Document Loaded successfully...")
     return document
 
