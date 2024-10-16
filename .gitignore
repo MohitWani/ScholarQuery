@@ -1,1 +1,28 @@
-myenv
+# Ignore .env file
+.env
+
+# Python specific files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Streamlit specific files
+.streamlit/
+
+# Jupyter Notebook files
+.ipynb_checkpoints/
+
+# macOS specific
+.DS_Store
+
+# Log files
+*.log
+
+# Ignore other sensitive files
+.env.*
+*.secret
