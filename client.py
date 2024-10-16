@@ -14,9 +14,14 @@ with tab1:
 
     if uploaded_file is not None:
         # Send the file to the backend for processing
-        files = {"file": uploaded_file.getvalue()}
+        files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
         response = requests.post("http://localhost:8000/retrieval", files=files)
-        st.success("Document uploaded! " + response.json().get("message"))
+        st.success("Document uploaded! ")
+
+    prompt = st.chat_input("Write your query here")
+    if prompt:
+        chat_res = requests.post("http://localhost:8000/Generation",json={"prompt":prompt})
+        st.write(chat_res)
 
 
 with tab2:
@@ -24,7 +29,7 @@ with tab2:
 
     st.title("Ask Me About Research Paper.")
 
-    query = st.text_input("Your question 👇")
+    query = st.chat_input("Your question 👇")
 
     if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []

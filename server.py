@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from utils.agent import run_agent
 import uvicorn
 from utils.Retrieval import load_document, splitter, create_vectorstore
 from utils.Generation import multi_query_retriever, reciprocal_rank_fusion, generation_step, model
 from langchain_community.embeddings import GPT4AllEmbeddings
 from langchain_community.vectorstores import FAISS
+from pydantic import BaseModel
 
 
 app = FastAPI(
@@ -14,27 +15,32 @@ app = FastAPI(
     )
 
 @app.post("/retrieval")
-async def retrieval(file):
-    doc = load_document(file)
+async def retrieval(file: UploadFile = File(...)):
+    try:
+        doc = load_document(file.file)
 
-    splits = splitter(doc)
+        splits = splitter(doc)
 
-    create_vectorstore()
+        create_vectorstore(splits)
+        return {"message":"Retrieval Step is Successfull"}
+    except Exception as e:
+        return {"error": str(e)}
 
-    return {"message":"Retrieval Step is Successfull"}
+class QueryInput(BaseModel):
+    prompt: str
 
 @app.post("/Generation")
-async def generation(input_text):
+async def generation(input: QueryInput):
     llm = model()
     embedding = GPT4AllEmbeddings()
     db = FAISS.load_local('D:/my_projects/ScholarQuery/faiss_index', embedding, allow_dangerous_deserialization=True)
     retrieval = db.as_retriever()
 
-    retriever = multi_query_retriever(llm,retrieval,input_text)
-    rank = reciprocal_rank_fusion(retriever)
-    response = generation_step(llm,rank,input_text)
+    query_results = multi_query_retriever(llm,retrieval,input.prompt)
+    reranked_results = reciprocal_rank_fusion(query_results)
+    response = generation_step(llm,reranked_results,input.prompt)
 
-    return response
+    return {'response':response}
 
 @app.post("/agent")
 async def agents(question):

@@ -16,3 +16,4 @@ gpt4all
 faiss-cpu
 langchain_huggingface
 arxiv
+python-multipart
