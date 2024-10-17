@@ -21,22 +21,27 @@ with tab1:
     prompt = st.chat_input("Write your query here")
     if prompt:
         chat_res = requests.post("http://localhost:8000/Generation",json={"prompt":prompt})
-        st.write(chat_res)
+        chat_output = chat_res.json()
+        st.write(f"Prompt: {prompt}")
+        st.write(chat_output['response'].strip())
 
 
 with tab2:
-    agent_executor = run_agent()
+    # agent_executor = run_agent()
 
-    st.title("Ask Me About Research Paper.")
+    # st.title("Ask Me About Research Paper.")
 
     query = st.chat_input("Your question 👇")
 
     if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
 
-    if st.button('Ask'):
-        response = agent_executor.invoke({"input":query})
-        st.write(response['output'])
+    if query is not None:
+        st.write(f"query: {query}")
+        # response = agent_executor.invoke({"input":query})
+        response = requests.post("http://localhost:8000/agent", json={"query":query})
+        res = response.json()
+        st.write(res)
 
         st.session_state['chat_history'].append((response['history'][0], response['history'][1]))
         for i, (user_chat, assistant_chat) in enumerate(st.session_state['chat_history']):

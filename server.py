@@ -28,6 +28,7 @@ async def retrieval(file: UploadFile = File(...)):
 
 class QueryInput(BaseModel):
     prompt: str
+    query: str
 
 @app.post("/Generation")
 async def generation(input: QueryInput):
@@ -41,11 +42,13 @@ async def generation(input: QueryInput):
     response = generation_step(llm,reranked_results,input.prompt)
 
     return {'response':response}
+    
 
 @app.post("/agent")
-async def agents(question):
+async def agents(input: QueryInput):
     agent_exec = run_agent()
-    return agent_exec.invoke({'input':question})
+    response = agent_exec.run(input.query)
+    return {'response':response}
 
 
 if __name__=="__main__":
