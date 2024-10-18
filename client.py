@@ -20,6 +20,7 @@ with tab1:
         st.success("Document uploaded! ")
 
     prompt = st.chat_input("Write your query here")
+    # Input Prompt.
     if prompt:
         chat_res = requests.post("http://localhost:8000/Generation",json={"prompt":prompt})
         chat_output = chat_res.json()
@@ -45,6 +46,7 @@ with tab2:
         res = response.json()
         st.write(res)
 
+        # Storing chat history and desplaying it as interactive conversation.
         st.session_state['chat_history'].append((response['history'][0], response['history'][1]))
         for i, (user_chat, assistant_chat) in enumerate(st.session_state['chat_history']):
             st.write(f"**User**: {user_chat}")  
