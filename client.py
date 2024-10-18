@@ -6,6 +6,7 @@ import requests
 
 # Streamlit app interface
 
+# created a two tabs, one for RAG and other for Agent and tools.
 tab1, tab2 = st.tabs(['ASK QUESTION TO YOUR DOCUMENTS.','ASK QUESTION TO ARXIV AGENT.'])
 # File Upload
 with tab1:
@@ -29,10 +30,11 @@ with tab1:
 with tab2:
     # agent_executor = run_agent()
 
-    # st.title("Ask Me About Research Paper.")
-
+    st.title("Ask Me About Research Paper.")
+    # Input box for Query Input.
     query = st.chat_input("Your question 👇")
 
+    # It stores the chat history for both user and AI response.
     if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
 
