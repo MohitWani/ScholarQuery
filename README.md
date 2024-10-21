@@ -10,12 +10,12 @@ This project is designed to reduce time and get information quickly without wast
 
 - Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
 
-![Project Screenshot](D:\my_projects\ScholarQuery\client.png)
+![Project Screenshot](ScholarQuery\assets\client.png)
 
 
 - Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
 
-![Project Screenshot](D:\my_projects\ScholarQuery\client.png)
+![Project Screenshot](ScholarQuery\assets\client1.png)
 
 
 ### Technology used.
