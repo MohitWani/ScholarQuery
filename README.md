@@ -37,7 +37,7 @@ Ensure that the following are installed on your system:
    First, clone the repository from GitHub to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone https://github.com/MohitWani/ScholarQuery.git
 
 2. **Navigate to the Project Directory**
 
