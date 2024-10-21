@@ -19,6 +19,11 @@ This project is designed to reduce time and get information quickly without wast
 #### RAG Input UI
 ![Project Screenshot](./assets/client.png)
 
+- Feature 3: FAST API server and REST API.
+
+#### server
+![Project Screenshot](./assets/server.png)
+
 
 ### Technology used.
 
