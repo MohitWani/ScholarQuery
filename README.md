@@ -10,13 +10,13 @@ This project is designed to reduce time and get information quickly without wast
 
 - Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
 
-# Agent Input UI
+#### Agent Input UI
 ![Project Screenshot](./assets/client1.png)
 
 
 - Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
 
-# RAG Input UI
+#### RAG Input UI
 ![Project Screenshot](./assets/client.png)
 
 
