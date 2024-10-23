@@ -73,10 +73,11 @@ Ensure that the following are installed on your system:
 5. **Setup API TOKENS**
 
     Create .env file:
+
+    //add your own API tokens use .env.example file for reference.
     ```bash
     touch .env
 
-    add your own API tokens use .env.example file for reference.
 
 6. **Run the Application**
 
