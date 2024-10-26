@@ -1,21 +1,24 @@
 # ScholarQuery
 
+This project is designed to reduce time and get information quickly without wasting time to read research paper. It implement Arxiv AGENT, Tools and Advance Retrieval Augmented Generation to get relevant information about any research papers.
+
+## RAG Process
 ![Project Image](https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/8368de64-741a-4488-982b-d3e4245334ba/RAG_-_Retrieval.png?t=1709798274)
 
-## Overview
-
-This project is designed to reduce time and get information quickly without wasting time to read research paper. It implement Arxiv AGENT, Tools and Advance Retrieval Augmented Generation to get relevant information about any research papers.
+---
 
 ### Key Features.
 
 - Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
 - Feature 2: Created a Advanced Retrieval Augmented Generation Pipeline for documents Not in Arxiv Library.
 
+---
+
 ### Technology used.
 
 - **Language/Frameworks** : Python, Langchain, Streamlit, FastAPI
 
-
+---
 
 ## Installation
 
@@ -25,10 +28,16 @@ Follow these steps to install and run the project locally:
 
 Ensure that the following are installed on your system:
 
+#### For Local Setup:
+
 - **Python 3.11.6**: You can download it from [Python's official website](https://www.python.org/downloads/).
 - **pip**: Python package installer (comes with Python).
 - **git**: For cloning the repository.
 - **API keys**: Check .env.example file to add your own api tokens.
+
+#### For Docker Setup:
+
+- Docker (Ensure Docker is installed and running)
 
 ### Local Setup
 
@@ -38,23 +47,27 @@ Ensure that the following are installed on your system:
 
    ```bash
    git clone https://github.com/MohitWani/ScholarQuery.git
+   ```
 
 2. **Navigate to the Project Directory**
 
     ```bash
     cd ScholarQuery
+    ```
  
 3. **Create a Virtual Environment**
 
     ```bash
     python -m venv env
     env\Scripts\activate
+    ```
 
 4. **Install the Required Dependencies**
 
     install all required Python packages using pip:
     ```bash
     pip install -r requirements.txt
+    ```
 
 5. **Setup API TOKENS**
 
@@ -73,11 +86,13 @@ Ensure that the following are installed on your system:
 
     ```bash
     streamlit run app.py
+    ```
 
 - For a FastAPI app:
 
     ```bash
     server.py
+    ```
 
 ### Docker Setup
 
@@ -87,22 +102,27 @@ Ensure that the following are installed on your system:
 
    ```bash
    git clone https://github.com/MohitWani/ScholarQuery.git
+   ```
 
 2. **Navigate to the Project Directory:**
 
     ```bash
     cd ScholarQuery
+    ```
 
 3. **Build the Docker image:**
 
     ```bash
     docker build -t scholarquery
+    ```
 
 3. **Run the Docker container:**
 
     ```bash
     docker run -p 8000:8000 -p 8501:8501 scholarquery
+    ```
 
+---
 
 #### Agent Input UI
 ![Project Screenshot](./assets/client1.png)
