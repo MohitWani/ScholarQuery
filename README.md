@@ -83,12 +83,12 @@ Ensure that the following are installed on your system:
 
     Finally, run the application:
 
-    For a Streamlit app:
+- For a Streamlit app:
 
     ```bash
     streamlit run app.py
 
-    For a FastAPI app:
+- For a FastAPI app:
 
     ```bash
     server.py
