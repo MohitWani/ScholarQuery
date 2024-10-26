@@ -1,6 +1,5 @@
 requests
 langchain
-llama-index
 streamlit
 pandas
 langchain_community
