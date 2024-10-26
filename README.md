@@ -56,7 +56,7 @@ Ensure that the following are installed on your system:
 2. **Navigate to the Project Directory**
 
     ```bash
-    cd your-repository
+    cd ScholarQuery
  
 3. **Create a Virtual Environment**
 
@@ -85,10 +85,10 @@ Ensure that the following are installed on your system:
 
     For a Streamlit app:
 
-        ```bash
-        streamlit run app.py
+    ```bash
+    streamlit run app.py
 
     For a FastAPI app:
 
-        ```bash
-        server.py
+    ```bash
+    server.py
