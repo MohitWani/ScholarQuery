@@ -9,21 +9,7 @@ This project is designed to reduce time and get information quickly without wast
 ### Key Features.
 
 - Feature 1: Utilize a Langchain Agents and Arxiv TOOLS for getting accurate information about paper.
-
-#### Agent Input UI
-![Project Screenshot](./assets/client1.png)
-
-
-- Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
-
-#### RAG Input UI
-![Project Screenshot](./assets/client.png)
-
-- Feature 3: FAST API server and REST API.
-
-#### server
-![Project Screenshot](./assets/server.png)
-
+- Feature 2: Created a Advanced Retrieval Augmented Generation Pipeline for documents Not in Arxiv Library.
 
 ### Technology used.
 
@@ -44,7 +30,7 @@ Ensure that the following are installed on your system:
 - **git**: For cloning the repository.
 - **API keys**: Check .env.example file to add your own api tokens.
 
-### Steps to Install
+### Local Setup
 
 1. **Clone the Repository**
 
@@ -92,3 +78,42 @@ Ensure that the following are installed on your system:
 
     ```bash
     server.py
+
+### Docker Setup
+
+1. **Clone the Repository:**
+
+   First, clone the repository from GitHub to your local machine:
+
+   ```bash
+   git clone https://github.com/MohitWani/ScholarQuery.git
+
+2. **Navigate to the Project Directory:**
+
+    ```bash
+    cd ScholarQuery
+
+3. **Build the Docker image:**
+
+    ```bash
+    docker build -t scholarquery
+
+3. **Run the Docker container:**
+
+    ```bash
+    docker run -p 8000:8000 -p 8501:8501 scholarquery
+
+
+#### Agent Input UI
+![Project Screenshot](./assets/client1.png)
+
+
+- Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
+
+#### RAG Input UI
+![Project Screenshot](./assets/client.png)
+
+- Feature 3: FAST API server and REST API.
+
+#### server
+![Project Screenshot](./assets/server.png)
