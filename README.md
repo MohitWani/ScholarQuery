@@ -122,6 +122,17 @@ Ensure that the following are installed on your system:
     docker run -p 8000:8000 -p 8501:8501 scholarquery
     ```
 
+4. **Navigate to Application**
+
+For Server:
+    ```bash
+    http://localhost:8000/docs
+    ```
+For Client:
+    ```bash
+    http://localhost:8501
+
+    
 ---
 
 #### Agent Input UI
