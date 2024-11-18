@@ -22,10 +22,10 @@ with tab1:
     prompt = st.chat_input("Write your query here")
     # Input Prompt.
     if prompt:
-        chat_res = requests.post("http://localhost:8000/Generation",json={"prompt":prompt})
+        chat_res = requests.post("http://localhost:8000/Generation",json={"query":prompt})
         chat_output = chat_res.json()
-        st.write(f"Prompt: {prompt}")
-        st.write(chat_output['response'].strip())
+        st.write(f"query: {prompt}")
+        st.write(chat_output['output'])
 
 
 with tab2:
@@ -35,19 +35,19 @@ with tab2:
     # Input box for Query Input.
     query = st.chat_input("Your question 👇")
 
-    # It stores the chat history for both user and AI response.
-    if 'chat_history' not in st.session_state:
-        st.session_state['chat_history'] = []
+    # # It stores the chat history for both user and AI response.
+    # if 'chat_history' not in st.session_state:
+    #     st.session_state['chat_history'] = []
 
     if query is not None:
         st.write(f"query: {query}")
         # response = agent_executor.invoke({"input":query})
-        response = requests.post("http://localhost:8000/agent", json={"query":query})
-        res = response.json()
-        st.write(res)
+        agent_output = requests.post("http://localhost:8000/agent", json={"agent_query":query})
+        res = agent_output.json()
+        st.write(res['response']['output'])
 
-        # Storing chat history and desplaying it as interactive conversation.
-        st.session_state['chat_history'].append((response['history'][0], response['history'][1]))
-        for i, (user_chat, assistant_chat) in enumerate(st.session_state['chat_history']):
-            st.write(f"**User**: {user_chat}")  
-            st.write(f"**Assistant**: {assistant_chat}")
+        # # Storing chat history and desplaying it as interactive conversation.
+        # st.session_state['chat_history'].append((response['history'][0], response['history'][1]))
+        # for i, (user_chat, assistant_chat) in enumerate(st.session_state['chat_history']):
+        #     st.write(f"**User**: {user_chat}")  
+        #     st.write(f"**Assistant**: {assistant_chat}")
