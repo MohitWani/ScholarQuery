@@ -135,14 +135,17 @@ For Client:
 
 ---
 
-#### Agent Input UI
+#### Agent Input and UI
 ![Project Screenshot](./assets/client1.png)
-
+---
+![Project Screenshot](./assets/Agent_output.png)
 
 - Feature 2: Advance Retrieval Augmented Generation for papers not in Arxiv library.
 
 #### RAG Input UI
 ![Project Screenshot](./assets/client.png)
+---
+![Project Screenshot](./assets/RAG_output.png)
 
 - Feature 3: FAST API server and REST API.
 
